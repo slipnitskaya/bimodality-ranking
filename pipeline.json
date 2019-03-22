@@ -1,0 +1,43 @@
+{
+  "Setup": {
+    "description": "",
+    "random_seed": null
+  },
+  "Dataset": {
+    "class": "modules.DataLoader",
+    "args": {
+      "path_to_data": "/home/slipnitskaya/PycharmProjects/piRNA-analysis/data/transposons_nunq5.pkl"
+    }
+  },
+  "Transforms": [
+    {
+      "class": "modules.Scaling",
+      "args": {
+        "new_min": 1e-16,
+        "new_max": 1.0,
+        "axis": -1
+      }
+    },
+    {
+      "class": "modules.HistBuilder",
+      "args": {"n_bins": 15}
+    }
+  ],
+  "Model": {
+    "class": "modules.CorrelationModel",
+    "args": {"n_bins": 15}
+  },
+  "Metric": {
+    "class": "modules.DummyMetric",
+    "args": {}
+  },
+  "Saver": {
+    "class": "modules.PredictionHists",
+    "args": {
+      "use_raw": true,
+      "filename": "transposons_nunq5",
+      "n_bins": 15,
+      "path_to_orig": "/home/slipnitskaya/PycharmProjects/piRNA-analysis/data/transposons_nunq5.pkl"
+    }
+  }
+}
