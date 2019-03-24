@@ -112,7 +112,7 @@ class PredictionHists(object):
                  filename: str,
                  use_raw: bool = False,
                  n_bins: Optional[int] = 15,
-                 n_bm: int = 50,
+                 n_bm: int = 100,
                  path_to_orig: Optional[str] = None):
 
         super(PredictionHists, self).__init__()
@@ -145,7 +145,7 @@ class PredictionHists(object):
             filename = '{}_bm{}'.format(self.filename, self.n_bm)
             if self.X_orig is not None:
                 X_orig_sorted = self.X_orig[::-1].iloc[indices].T
-                X_orig_sorted.T.to_pickle(
+                X_orig_sorted.to_pickle(
                     os.path.join(
                         '/home/slipnitskaya/PycharmProjects/piRNA-analysis/data',
                         '{}.pkl'.format(filename)
