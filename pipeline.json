@@ -37,7 +37,8 @@
       "use_raw": true,
       "filename": "transposons_nunq5",
       "n_bins": 15,
-      "path_to_orig": "/home/slipnitskaya/PycharmProjects/piRNA-analysis/data/transposons_nunq5.pkl"
+      "path_to_orig": "/home/slipnitskaya/PycharmProjects/piRNA-analysis/data/transposons_nunq5.pkl",
+      "n_bm": null
     }
   }
 }

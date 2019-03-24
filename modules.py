@@ -112,7 +112,7 @@ class PredictionHists(object):
                  filename: str,
                  use_raw: bool = False,
                  n_bins: Optional[int] = 15,
-                 n_bm: int = 100,
+                 n_bm: Optional[int] = None,
                  path_to_orig: Optional[str] = None):
 
         super(PredictionHists, self).__init__()
@@ -123,12 +123,13 @@ class PredictionHists(object):
         self.filename = filename
         self.use_raw = use_raw
         self.n_bins = n_bins
-        self.n_bm = n_bm
 
         if path_to_orig is not None:
             self.X_orig: pd.DataFrame = pickle.load(open(path_to_orig, 'rb'), encoding='latin1').T
         else:
             self.X_orig = None
+
+        self.n_bm = n_bm if n_bm is not None else self.X_orig.shape[0]
 
     def save(self, report):
         for entry in report:
@@ -142,7 +143,7 @@ class PredictionHists(object):
             X = X[indices]
             X_bm = X[::-1][:self.n_bm]
 
-            filename = '{}_bm{}'.format(self.filename, self.n_bm)
+            filename = '{}_bm{}'.format(self.filename, self.n_bm if self.n_bm <= 100 else 'a')
             if self.X_orig is not None:
                 X_orig_sorted = self.X_orig[::-1].iloc[indices].T
                 X_orig_sorted.to_pickle(
@@ -163,9 +164,8 @@ class PredictionHists(object):
                 bbox_inches='tight'
             )
             plt.close()
-            # plt.show()
 
-            num_items_to_plot = self.n_bm
+            num_items_to_plot = self.n_bm if self.n_bm <= 100 else 50
             cols = 5
             rows = num_items_to_plot // cols
             rows += num_items_to_plot % cols
@@ -200,4 +200,3 @@ class PredictionHists(object):
                 bbox_inches='tight',
                 bbox_extra_artists=[suptitle])
             plt.close(fig)
-            # plt.show()
